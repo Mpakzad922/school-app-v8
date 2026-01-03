@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مدرسه هوشمند چمران</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="loginScreen">
+        <div class="login-box">
+            <h2>🔐 ورود دانش‌آموز</h2>
+            <p style="font-size:0.8rem; opacity:0.8;">جهت ورود به کلاس، نام کاربری و رمز خود را وارد کنید.</p>
+            <input type="text" id="uInput" class="login-input" placeholder="نام کاربری (انگلیسی)">
+            <input type="password" id="pInput" class="login-input" placeholder="رمز عبور">
+            <button class="login-btn" onclick="AuthManager.doLogin()">ورود به کلاس</button>
+        </div>
+    </div>
+
+    <div id="loadingBox" class="loading-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top:15px; color:#555; font-weight:bold;">لطفاً صبر کنید...</p>
+    </div>
+
+    <div id="mainApp" style="display:none;">
+        
+        <header>
+            <div class="user-info">
+                <h2 id="headerUser">دانش‌آموز</h2>
+                <div id="userRank" class="user-rank">سرباز صفر</div>
+            </div>
+            <div class="xp-badge"><span id="userXP">0</span> XP</div>
+            <button onclick="AuthManager.logout()" style="background:none; border:none; color:red; font-size:1.2rem; cursor:pointer;">🚪</button>
+        </header>
+
+        <div id="offlineBadge"></div>
+
+        <div id="tab-lessons" class="tab-content active">
+            <div id="playlist-container">
+                </div>
+        </div>
+
+        <div id="tab-ranking" class="tab-content">
+            <div style="text-align:center; padding:40px 20px;">
+                <h1 style="font-size:3rem; margin:0;">🏆</h1>
+                <h3 style="color:var(--primary);">تالار افتخارات</h3>
+                <p style="color:#7f8c8d; font-size:0.9rem;">
+                    این بخش در حال حاضر برای محاسبه دقیق رتبه‌ها در حال بروزرسانی است.<br>
+                    امتیازات شما محفوظ است.
+                </p>
+                
+                <div style="background:white; padding:20px; border-radius:15px; margin-top:20px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+                    <div style="font-size:0.9rem; color:#95a5a6;">امتیاز بعدی:</div>
+                    <div id="nextLevelXP" style="font-weight:bold; color:var(--accent); margin-top:5px;">...</div>
+                    <div style="width:100%; background:#eee; height:10px; border-radius:5px; margin-top:10px; overflow:hidden;">
+                        <div id="levelProgress" style="width:0%; height:100%; background:var(--accent); transition:width 0.5s;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-btn active" data-target="tab-lessons">
+                <span class="nav-icon">🏠</span>
+                <span>کلاس درس</span>
+            </button>
+            <button class="nav-btn" data-target="tab-ranking">
+                <span class="nav-icon">🏆</span>
+                <span>رتبه‌بندی</span>
+            </button>
+            <button class="nav-btn" onclick="window.location.href='azmoon.html'">
+                <span class="nav-icon">📝</span>
+                <span>آزمون‌ها</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="videoModal">
+        <div id="videoContainer" style="display:none;">
+            <div class="player-controls" style="border-radius:15px 15px 0 0; background:#222;">
+                <div class="controls-row">
+                    <span id="videoTitle" style="font-size:0.9rem;">عنوان درس</span>
+                    <button class="close-video-btn" onclick="PlayerManager.close()">بستن ✖</button>
+                </div>
+            </div>
+            
+            <video id="mainVideo" playsinline webkit-playsinline></video>
+            
+            <div class="player-controls" style="border-radius:0 0 15px 15px;">
+                <div id="customProgressBar" class="progress-bar-bg" onclick="PlayerManager.seek(event)">
+                    <div id="customProgressFill" class="progress-fill"></div>
+                </div>
+                
+                <div class="controls-row" style="margin-top:10px;">
+                    <div id="timeDisplay" style="font-size:0.8rem; color:#aaa;">00:00 / 00:00</div>
+                    <div style="display:flex; gap:15px;">
+                        <button onclick="PlayerManager.skip(-10)" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;">⏪ 10</button>
+                        <button onclick="PlayerManager.skip(10)" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;">10 ⏩</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>         <script src="js/sync.js"></script>           <script src="js/gamification.js"></script>   <script src="js/app.js"></script>            <script src="js/auth.js"></script>           <script src="js/player.js"></script>         <script>
+        // شروع برنامه با بررسی لاگین
+        window.onload = function() {
+            AuthManager.check();
+        };
+    </script>
+
+</body>
+</html>
