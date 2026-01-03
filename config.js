@@ -3,7 +3,7 @@
 // ******************************************************
 
 // 🔴 نکته مهم: اگر آدرس سرور لیارا تغییر کرد، فقط همینجا را آپدیت کنید.
-const API_URL = "https://chamran-api.liara.run"; 
+const API_URL = "https://chamran-v8.liara.run"; 
 
 // کلیدهای ذخیره‌سازی در حافظه مرورگر
 const DB_KEY = "chamran_db_vfinal_"; 
@@ -26,4 +26,5 @@ function getDeviceInfo() {
 }
 
 // پیام در کنسول برای اطمینان از لود شدن فایل
+
 console.log("✅ Config Loaded");
